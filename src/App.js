@@ -7,10 +7,23 @@ import {
   decrementId,
   inputId,
 } from "./features/dataSlice";
+import { useEffect } from 'react';
 
-function App() {
+
+const mapStateToProps = (state) => ({
+  objectId: state.data.objectId
+})
+
+
+function App(props) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.data);
+
+
+  useEffect(() => {
+    dispatch(fetchData())
+}, [props.objectId, dispatch])
+
 
   const renderImg = () => {
     if (data.apiData) {
@@ -48,4 +61,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(mapStateToProps)(App)
